@@ -1,0 +1,29 @@
+Submodule pycades-source contains modified content
+Submodule pycades-source 10c4c7b..9b1dc16:
+diff --git a/pycades-source/src/PyCades.cpp b/pycades-source/src/PyCades.cpp
+index 65aeaa7..934db98 100755
+--- a/pycades-source/src/PyCades.cpp
++++ b/pycades-source/src/PyCades.cpp
+@@ -40,7 +40,6 @@
+ #include "PyCadesExtensions.h"
+ #endif
+ 
+-#define PYCADES_VERSION "0.1.70200"
+ static PyObject * pycades_ModuleVersion(PyObject *self, PyObject *args)
+ {
+     return Py_BuildValue("s", PYCADES_VERSION);
+@@ -50,11 +49,11 @@ static PyMethodDef pycadesMethods[] = {
+     {"ModuleVersion", pycades_ModuleVersion, METH_NOARGS, "pycades module version"},
+     {NULL, NULL, 0, NULL}};
+ 
+-PyMODINIT_FUNC PyInit_pycades(void) {
++PyMODINIT_FUNC PyInit__pycades(void) {
+     static struct PyModuleDef moduledef = {
+         PyModuleDef_HEAD_INIT,
+-        "pycades",
+-        "pycades",
++        "_pycades",
++        "Python3 extension for CAdES",
+         -1,
+         pycadesMethods,
+         NULL,
