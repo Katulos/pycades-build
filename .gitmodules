@@ -1,0 +1,3 @@
+[submodule "pycades-source"]
+	path = pycades-source
+	url = https://github.com/CryptoPro/pycades
