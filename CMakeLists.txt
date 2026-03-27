@@ -145,6 +145,17 @@ find_library(FOUND_LIB_CPPCADES
 
 target_link_libraries(_pycades PRIVATE ${FOUND_LIB_CPPCADES})
 
+find_library(FOUND_LIB_CPLIB
+    NAMES cplib
+    HINTS
+        /opt/cprocsp/lib/amd64
+        /opt/cprocsp/lib/ia32
+        /opt/cprocsp/lib/aarch64
+    REQUIRED
+)
+
+target_link_libraries(_pycades PRIVATE ${FOUND_LIB_CPLIB})
+
 if(DEFINED PY_BUILD_CMAKE_IMPORT_NAME AND NOT "${PY_BUILD_CMAKE_IMPORT_NAME}" STREQUAL "")
     install(TARGETS _pycades
         EXCLUDE_FROM_ALL
