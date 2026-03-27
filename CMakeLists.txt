@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.15...3.27)
 
-
 set(PROJECT_MAJOR_VERSION 0)
 set(PROJECT_MINOR_VERSION 1)
 set(PROJECT_PATCH_VERSION 70200)
@@ -22,52 +21,68 @@ find_package(Python COMPONENTS Interpreter ${DEV_MODULE} REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pycades-source/src)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pycades-source)
+
+set(PATCHED_SRC_DIR ${CMAKE_BINARY_DIR}/patched_src)
+
+file(COPY ${SRC_DIR} DESTINATION ${PATCHED_SRC_DIR})
+
+find_package(Patch REQUIRED)
+
+message("-- Applying ${CMAKE_CURRENT_SOURCE_DIR}/patches/001-move-version-define-and-rename-lib.patch")
+
+execute_process(
+    COMMAND ${Patch_EXECUTABLE} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/patches/001-move-version-define-and-rename-lib.patch
+    WORKING_DIRECTORY ${PATCHED_SRC_DIR}
+    RESULT_VARIABLE PATCH_RESULT
+)
+
+if(NOT PATCH_RESULT EQUAL 0)
+    message(FATAL_ERROR "Failed to apply patch")
+endif()
 
 set(pycades_LIB_SRCS
-    ${SRC_DIR}/PyCades.cpp
-    ${SRC_DIR}/PyCadesAbout.cpp
-    ${SRC_DIR}/PyCadesAlgorithm.cpp
-    ${SRC_DIR}/PyCadesAttribute.cpp
-    ${SRC_DIR}/PyCadesAttributes.cpp
-    ${SRC_DIR}/PyCadesBasicConstraints.cpp
-    ${SRC_DIR}/PyCadesBlobs.cpp
-    ${SRC_DIR}/PyCadesCertificate.cpp
-    ${SRC_DIR}/PyCadesCertificates.cpp
-    ${SRC_DIR}/PyCadesCertificateStatus.cpp
-    ${SRC_DIR}/PyCadesCRL.cpp
-    ${SRC_DIR}/PyCadesEncodedData.cpp
-    ${SRC_DIR}/PyCadesEnvelopedData.cpp
-    ${SRC_DIR}/PyCadesEKU.cpp
-    ${SRC_DIR}/PyCadesEKUs.cpp
-    ${SRC_DIR}/PyCadesExtension.cpp
-    ${SRC_DIR}/PyCadesExtensions.cpp
-    ${SRC_DIR}/PyCadesExtendedKeyUsage.cpp
-    ${SRC_DIR}/PyCadesHashedData.cpp
-    ${SRC_DIR}/PyCadesKeyUsage.cpp
-    ${SRC_DIR}/PyCadesOID.cpp
-    ${SRC_DIR}/PyCadesPrivateKey.cpp
-    ${SRC_DIR}/PyCadesPublicKey.cpp
-    ${SRC_DIR}/PyCadesRawSignature.cpp
-    ${SRC_DIR}/PyCadesRecipients.cpp
-    ${SRC_DIR}/PyCadesSignatureStatus.cpp
-    ${SRC_DIR}/PyCadesSignedData.cpp
-    ${SRC_DIR}/PyCadesSignedXML.cpp
-    ${SRC_DIR}/PyCadesSigner.cpp
-    ${SRC_DIR}/PyCadesSigners.cpp
-    ${SRC_DIR}/PyCadesStore.cpp
-    ${SRC_DIR}/PyCadesSymmetricAlgorithm.cpp
-    ${SRC_DIR}/PyCadesVersion.cpp
-    ${SRC_DIR}/PyEnrollContainer.cpp
-    ${SRC_DIR}/PyEnrollContainers.cpp
-    ${SRC_DIR}/PyEnrollContainerKey.cpp
-    ${SRC_DIR}/PyEnrollContainerKeys.cpp
-    ${SRC_DIR}/PyEnrollCspInformation.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCades.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesAbout.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesAlgorithm.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesAttribute.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesAttributes.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesBasicConstraints.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesBlobs.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesCertificate.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesCertificates.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesCertificateStatus.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesCRL.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesEncodedData.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesEnvelopedData.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesEKU.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesEKUs.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesExtension.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesExtensions.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesExtendedKeyUsage.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesHashedData.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesKeyUsage.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesOID.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesPrivateKey.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesPublicKey.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesRawSignature.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesRecipients.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesSignatureStatus.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesSignedData.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesSignedXML.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesSigner.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesSigners.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesStore.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesSymmetricAlgorithm.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyCadesVersion.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyEnrollContainer.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyEnrollContainers.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyEnrollContainerKey.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyEnrollContainerKeys.cpp
+    ${PATCHED_SRC_DIR}/pycades-source/src/PyEnrollCspInformation.cpp
 )
 
 find_package(Boost REQUIRED)
-
-find_package(Patch REQUIRED)
 
 execute_process(
     COMMAND bash -c "if type dpkg > /dev/null 2>&1; then dpkg -l | grep cprocsp-pki-cades | awk '{print \$3}'; else rpm -qa | grep cprocsp-pki-cades; fi | cut -d. -f1 | cut -d- -f1"
@@ -87,7 +102,6 @@ execute_process(
 
 message("-- Found cprocsp-pki-cades: ${CPRO_CADES_VERSION_MAJOR}.${CPRO_CADES_VERSION_MINOR}.${CPRO_CADES_VERSION_BUILD}")
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -Wno-deprecated-declarations -Wno-narrowing")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -99,19 +113,14 @@ set(pycades_DIRS
     /opt/cprocsp/include/pki/cppcades
     /opt/cprocsp/include/pki/cplib
     /opt/cprocsp/include/pki
-    ${SRC_DIR}/cplib
-    ${SRC_DIR}
+    ${PATCHED_SRC_DIR}/pycades-source/src/cplib
+    ${PATCHED_SRC_DIR}/pycades-source/src
 )
 
 include_directories(
     ${Boost_INCLUDE_DIRS}
     ${Python_INCLUDE_DIRS}
     ${pycades_DIRS}
-)
-
-message("-- Apply ${CMAKE_CURRENT_SOURCE_DIR}/patches/001-move-version-define-and-rename-lib.patch")
-execute_process(
-    COMMAND ${Patch_EXECUTABLE} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/patches/001-move-version-define-and-rename-lib.patch
 )
 
 Python_add_library(_pycades MODULE ${pycades_LIB_SRCS} WITH_SOABI)
