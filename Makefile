@@ -43,7 +43,7 @@ build-package: clean ## Build python package
 	uv build
 
 .PHONY: tests
-tests: clean ## Run pytest
+tests: clean-test ## Run pytest
 	uvx nox
 
 .PHONY: build-ca

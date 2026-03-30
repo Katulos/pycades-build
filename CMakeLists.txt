@@ -170,4 +170,9 @@ if(DEFINED PY_BUILD_CMAKE_IMPORT_NAME AND NOT "${PY_BUILD_CMAKE_IMPORT_NAME}" ST
         EXCLUDE_FROM_ALL
         COMPONENT python_modules
         DESTINATION ${PY_BUILD_CMAKE_IMPORT_NAME})
+
+    install(FILES ${SRC_DIR}/src/pycades.pyi
+        DESTINATION ${PY_BUILD_CMAKE_IMPORT_NAME}
+        RENAME _pycades.pyi
+        COMPONENT python_modules) 
 endif()
