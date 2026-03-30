@@ -56,12 +56,12 @@ build-ca: ## Create Test CA
 	sudo /opt/cprocsp/bin/amd64/csptest -minica -leaf -dn "CN=Test User" -provtype 80 -issuer "CN=Test Root" -until 3650
 	sudo /opt/cprocsp/bin/amd64/csptest -minica -crl -fcrl tests/certs/test.crl -issuer "CN=Test Root" -until 3650
 	sudo cp -r /var/opt/cprocsp tests/certs/cprocsp
-	sudo cp -r /etc/opt/cprocsp tests/etc/opt
+	sudo cp -r /etc/opt/cprocsp tests/certs/etc/opt
 	sudo mv test.crl tests/certs
 	sudo chown -R $(whoami): tests/certs
 
 .PHONY: install-ca
 install-ca:	## Install Test CA
-	sudo cp -r tests/certs/cprocsp /var/opt/cprocsp 
+	sudo cp -r tests/certs/cprocsp /etc/opt/cprocsp 
 	sudo cp -r tests/certs/cprocsp /var/opt
 
