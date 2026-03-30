@@ -1,0 +1,44 @@
+# WARNING! This file may get overwritten on package update, and your changes
+# will be lost or you'll have to manually resolve conflicts!
+# If possible, place site-specific additions and overrides in
+# local/cryptopro.csp.
+#
+# Keep in mind that 'deny' rules are evaluated after 'allow' rules, so you
+# won't be able to allow access to anything that is explicitly denied by the
+# shipped profile using this mechanism.
+
+#include <tunables/global>
+
+"/opt/cprocsp/bin/*/certmgr" {
+  #include <abstractions/cryptopro.csp>
+}
+
+"/opt/cprocsp/sbin/*/cpinstance" {
+  #include <abstractions/cryptopro.csp>
+}
+
+"/opt/cprocsp/bin/*/cptools" {
+  #include <abstractions/cryptopro.csp>
+  #include <abstractions/gnome>
+  /opt/cprocsp/bin/*/cptools Px,
+  /usr/bin/dbus-launch Ux,
+  @{HOME}/cptools-* k,
+}
+
+"/opt/cprocsp/bin/*/cryptcp" {
+  #include <abstractions/cryptopro.csp>
+}
+
+"/opt/cprocsp/sbin/*/cryptsrv" {
+  #include <abstractions/cryptopro.csp>
+  capability sys_resource,
+  capability chown,
+}
+
+"/opt/cprocsp/bin/*/csptest*" {
+  #include <abstractions/cryptopro.csp>
+}
+
+"/opt/cprocsp/bin/*/wipefile" {
+  #include <abstractions/cryptopro.csp>
+}

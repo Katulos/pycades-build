@@ -1,0 +1,48 @@
+  # WARNING! This file may get overwritten on package update, and your changes
+  # will be lost or you'll have to manually resolve conflicts!
+  # If possible, place site-specific additions and overrides in
+  # local/cryptopro.csp.
+  #
+  # Keep in mind that 'deny' rules are evaluated after 'allow' rules, so you
+  # won't be able to allow access to anything that is explicitly denied by the
+  # shipped profile using this mechanism.
+
+  # We assume that tunables/global was included in top-level file.
+  #include <abstractions/base>
+  #include <local/cryptopro.csp>
+
+  /opt/cprocsp/sbin/*/xcpui_app Ux,
+  /opt/cprocsp/sbin/*/mount_flash.sh Ux,
+  #/opt/cprocsp/sbin/*/oauthapp Ux,
+  #/opt/cprocsp/sbin/*/oauth_gtk2 Ux,
+  #/opt/cprocsp/bin/*/certmgr Px,
+  /bin/sh Ux,
+  /bin/bash Ux,
+  /bin/dash Ux,
+  /usr/bin/sh Ux,
+  /usr/bin/bash Ux,
+  /usr/bin/dash Ux,
+
+  # CPCSP-11690
+  /usr/lib/jcverify Ux,
+  /opt/aktivco/rutokenecp/*/librtpkcs11ecp.so m,
+
+  /** r,
+  /** w,
+  /opt/cprocsp/lib/*/* m,
+  /var/opt/cprocsp/tmp/.* k,
+
+  # CPCSP-11139
+  /opt/cprocsp/bin/*/* m,
+  /opt/cprocsp/sbin/*/* m,
+
+  network,
+
+  capability setuid,
+  capability setgid,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability net_bind_service,
+  capability ipc_lock,
